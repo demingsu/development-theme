@@ -19,7 +19,6 @@ const Theme = {
         /* 重新组装并解析参数 */
         let dirName = args.dirName,
 			isInfo = !!args.info,
-			isVersion = !!args.version,
             version = args.install;
 
         /* 如果是install类型需要下载指定theme和版本，如果版本未指定则设置为master最新版本 */
@@ -35,9 +34,7 @@ const Theme = {
                 dirName = version[1];
             }
             downloadZipFile(dirName, version);
-        } else if (isVersion) {
-			console.log(`now version is 1.1.7`);
-		} else {
+        } else {
             console.log('your commander order is error');
         }
     }
@@ -77,11 +74,23 @@ async function downloadZipFile(...args) {
 
             /* 删除临时文件 */
             removeDir(TEMP_DIR);
-
-            console.log('you will exec these orders: ');
-            console.log(`cd ${dirName}`);
-            console.log('cnpm install');
-            console.log('npm run start');
+			
+			console.log('##################################################################################');
+			console.log('#                                                                                #');
+			console.log('#                *****  ***   *   *   ***  *****   *   *                         #');
+			console.log('#                *       *    **  *    * 	*	    *   *	                      #');
+			console.log('#                *****   *    * * *    *	*****   *****					      #');
+			console.log('#                *       *    *  **    *	    *   *   *			              #');
+			console.log('#                *      ***   *   *   ***	*****   *   *				          #');
+			console.log('#                                                                                #');
+			console.log('#   **************************************************************************   #');
+			console.log('#                                                                                #');
+			console.log('#            You will execute these commands to run the project.                 #');
+			console.log(`#            1. cd ${dirName}                                                    #`);
+			console.log('#            2. cnpm install                                                     #');
+			console.log('#            3. npm run start                                                    #');
+			console.log('#                                                                                #');
+			console.log('##################################################################################');
         });
 }
 

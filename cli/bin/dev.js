@@ -11,7 +11,6 @@ function versionName(name) {
 commander
     .option('-i, --install <name>', 'download zznode development theme package', versionName)
 	.option('-f, --info', 'Download usage commands for presentation templates ...')
-	.option('-v, --version', 'cli version information')
     .arguments('<dirName>')
     .action(function(val) {
         dirName = val;
@@ -20,7 +19,6 @@ commander
 
 theme({
     install: commander.install,
-	info: commander.info,
-	version: commander.version,
+	info: commander.info
     dirName: dirName
 });

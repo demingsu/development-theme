@@ -19,6 +19,6 @@ commander
 
 theme({
     install: commander.install,
-	info: commander.info
+	info: commander.info,
     dirName: dirName
 });

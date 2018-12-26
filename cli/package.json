@@ -1,6 +1,6 @@
 {
     "name": "zznode-cli",
-    "version": "1.1.10",
+    "version": "1.1.11",
     "description": "development theme command line tool",
     "main": "index.js",
     "scripts": {
@@ -8,7 +8,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/demingsu/vue-cli"
+        "url": "https://github.com/demingsu/development-theme"
     },
     "keywords": [
         "development",
@@ -19,7 +19,7 @@
         "zznode": "./bin/dev.js"
     },
     "bugs": {
-        "url": "https://github.com/demingsu/vue-cli/issues"
+        "url": "https://github.com/demingsu/development-theme/issues"
     },
     "author": "suedeming@163.com",
     "license": "MIT",

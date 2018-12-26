@@ -23,6 +23,8 @@ const Theme = {
 
         /* 如果是install类型需要下载指定theme和版本，如果版本未指定则设置为master最新版本 */
 		if (isInfo) {
+			console.log(`Download Command of empty Development Framework: ` ['green']);
+			console.log(`zznode -i theme@EMPTY <yourProjectName>` ['red']);
 			console.log(`Download Command of Backend System Development Framework: ` ['green']);
 			console.log(`zznode -i theme@BDEV <yourProjectName>` ['red']);
 			console.log(`Download Command of Big Screen System Development Framework: ` ['green']);

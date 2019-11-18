@@ -25,10 +25,6 @@ const Theme = {
 		if (isInfo) {
 			console.log(`Download Command of empty Development Framework: ` ['green']);
 			console.log(`zznode -i theme@EMPTY <yourProjectName>` ['red']);
-			console.log(`Download Command of Backend System Development Framework: ` ['green']);
-			console.log(`zznode -i theme@BDEV <yourProjectName>` ['red']);
-			console.log(`Download Command of Big Screen System Development Framework: ` ['green']);
-			console.log(`zznode -i theme@DDBS <yourProjectName>` ['red']);
 			console.log(`Download Command of Mobile System Development Framework: ` ['green']);
 			console.log(`zznode -i theme@DEVM <yourProjectName>` ['red']);
         } else if (!!version && version.length > 0) {

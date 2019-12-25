@@ -1,0 +1,23 @@
+{
+  "name": "zznode-ui",
+  "version": "1.2.33",
+  "description": "zznode front-end's component package",
+  "main": "./lib/zznode-ui.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demingsu/development-theme.git"
+  },
+  "keywords": [
+    "zznode-ui",
+    "vue",
+    "component"
+  ],
+  "types": "./types/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/demingsu/development-theme/issues"
+  },
+  "author": "suedeming@163.com",
+  "license": "MIT",
+  "homepage": "https://github.com/demingsu/development-theme#readme"
+}

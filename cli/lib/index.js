@@ -1,134 +1,86 @@
+const inquirer = require("inquirer"),
+      {log, chalk, clear, successInfo, downloadZipFile} = require("./handle");
+
 /* 主要处理方法 */
-let fs = require('fs'),
-    download = require('download'),
-    decompress = require('decompress'),
-    { spawn } = require('child_process'),
-    color = require('colors'),
-    [timeCounter, timer] = [0, null];
+const MakeDev = async () => {
+    let result = {};
+    log(chalk.greenBright('开发报名、发布包名都必须为a-zA-Z'));
+    let name = await getUserInput('path', '输入开发包名      ', 'input', new RegExp('^[a-zA-Z_]*$'));
+    let title = await getUserInput('title', '输入项目名字      ', 'input');
+    let publish = await getUserInput('publish', '输入发布包名字    ', 'input', new RegExp('^[a-zA-Z_]*$'));
+    let pkg = await getUserInput('package', '开发库类型(BE/M/TS)', 'list', [
+        {key: 'BE', name: 'BE 后端开发库', value: 'BE'},
+        {key: 'M', name: 'M 移动端开发库', value: 'M'},
+        {key: 'TS', name: 'TS 后端TS开发库', value: 'TS'},
+        {key: 'CF', name: 'CF 自定义表单库', value: 'CF'}]);
+    Object.assign(result, name, title, publish, pkg);
 
-/**
- * 定义所有静态变量
- */
-const [LIST_TYPE, TEMP_DIR, CNPM_INS, NPM_INS] = [
-    'version',
-    './dev-temp'
-];
+    logInfo('  你输入的项目名    ', result.title);
+    logInfo('  你输入的包名      ', result.path);
+    logInfo('  你输入的发布包名  ', result.publish);
 
-const Theme = {
-    init(args) {
-        /* 重新组装并解析参数 */
-        let dirName = args.dirName,
-			isInfo = !!args.info,
-            version = args.install;
+    let st = result.package.trim().toLocaleLowerCase();
+    result.package = st === 'ts' ? 'TS' : st === 'm' ? "M" : st === 'cf' ? "CF" : "BE";
+    logInfo('  你选择的库类型', result.package);
 
-        /* 如果是install类型需要下载指定theme和版本，如果版本未指定则设置为master最新版本 */
-		if (isInfo) {
-			console.log(`Download Command of empty Development Framework: ` ['green']);
-			console.log(`zznode -i theme@EMPTY <yourProjectName>` ['red']);
-			console.log(`Download Command of Mobile System Development Framework: ` ['green']);
-			console.log(`zznode -i theme@DEVM <yourProjectName>` ['red']);
-        } else if (!!version && version.length > 0) {
-            if (dirName === "") {
-                dirName = version[1];
-            }
-            downloadZipFile(dirName, version);
-        } else {
-            console.log('your commander order is error');
-        }
-    }
-}
-
-/* 下载制定GitHub zip文件 */
-async function downloadZipFile(...args) {
-    /* 重新定义参数 */
-    let [dirName, version] = args;
-
-    /* 下载提示 */
-    console.log(`Begin download the ${version[0]} version of the ${version[1]} theme template dicrionary ...`);
-
-    /* 如果不存在文件则进行创建文件夹，并下载文件 */
-    if(!fs.existsSync(TEMP_DIR)) fs.mkdirSync(TEMP_DIR);
-
-    timerFunc('start', 'Loading ... ...');
-
-    let path = `https://github.com/demingsu/development-theme/raw/master/${version[0]}/${version[1]}.zip`;
-    await download(path, TEMP_DIR)
-        .then(() => {
-            // console.log(`The ${version[0]} version of the ${version[1]} theme template has downloaded`);
-        }).catch(e => {
-            console.log(`The ${version[0]} version of the ${version[1]} theme template has error when downloading`);
-            
-            /* 删除临时文件 */
-            removeDir(TEMP_DIR);
-        });
-
-    timerFunc('close');
-    /* 根据不同类型解压到不同位置 */
-
-    await decompress(`${TEMP_DIR}/${version[1]}.zip`, dirName)
-        .then(files => {
-            /* 文件下载成功提示 */
-            console.log('Theme dicrionary downloaded success');
-
-            /* 删除临时文件 */
-            removeDir(TEMP_DIR);
-			
-			console.log('##################################################################################');
-			console.log('#                                                                                #');
-			console.log('#                *****  ***   *   *   ***  *****   *   *                         #');
-			console.log('#                *       *    **  *    *   *       *   *                         #');
-			console.log('#                *****   *    * * *    *   *****   *****                         #');
-			console.log('#                *       *    *  **    *       *   *   *                         #');
-			console.log('#                *      ***   *   *   ***  *****   *   *                         #');
-			console.log('#                                                                                #');
-			console.log('#   **************************************************************************   #');
-			console.log('#                                                                                #');
-			console.log('#            You will execute these commands to run the project.                 #');
-			console.log(`#            1. cd ${dirName}                                                    #`);
-			console.log('#            2. cnpm install                                                     #');
-			console.log('#            3. npm run start                                                    #');
-			console.log('#                                                                                #');
-			console.log('##################################################################################');
-        });
-}
-
-/* 超时方法 */
-function timerFunc(type, str) {
-    if (type === 'start') {
-        type = 'loading';
-        timeCounter = 0;
-    }
-    if (type === 'loading') {
-        timer = setTimeout(() => {
-            timeCounter += 500;
-            console.log(`${str}` ['green'], `${timeCounter/1000}s` ['red']);
-            timerFunc(type, str);
-        }, 500);
+    let confirm = await getUserInput('conf', '确认是否下载库(Y/N)?');
+    if (confirm.conf.trim().toLocaleLowerCase() === "n") {
+        log(chalk.yellow('  see you next time'));
     } else {
-        if (timer) clearTimeout(timer);
-        timer = null;
-    }
-}
+        result.package = result.package === 'TS' ? 'TSDEV' : result.package === 'M' ? 'DEVM' : result.package === 'CF' ? 'CUSF' : 'EMPTY';
 
-/* 删除临时目录文件 */
-async function removeDir(path) {
-    var files = [];
-    /* 如果存在文件，读取文件 */
-    if (fs.existsSync(path)) {
-        files = fs.readdirSync(path);
-        /* 遍历所有文件 */
-        files.forEach(function(file, index) {
-            var curPath = path + "/" + file;
-            /* 如果是文件夹，则递归删除，否则直接删除文件 */
-            if (fs.statSync(curPath).isDirectory()) {
-                removeDir(curPath);
-            } else {
-                fs.unlinkSync(curPath);
-            }
-        });
-        /* 删除主目录 */
-        fs.rmdirSync(path);
+        let res = await downloadZipFile(result);
+        if (res) {
+            showWishInfo(result);
+        } else {
+            log(chalk.redBright('Download Error, sorry!'));
+        }
+        
     }
 };
 
-module.exports = Theme;
+const logInfo = (info, value) => {
+    log(chalk.yellow(`${info}：`+chalk.greenBright(chalk.underline(value))));
+};
+
+const getUserInput = (name, message, type, data) => {
+    return new Promise((resolve, reject) => {
+        let config = {type, name, message};
+        switch (type) {
+            case 'input':
+                if (!!data) {
+                    Object.assign(config, {
+                        validate: value => {
+                            if (value.trim() === "") return message;
+                            if (!(data.test(value.trim()))) return '输入不符合格式要求';
+                            return true;
+                        }
+                    })
+                }
+                break;
+            case 'list':
+                Object.assign(config, {choices: data});
+                break;
+            default:
+                break;
+        }
+
+        inquirer.prompt(config).then(data => {
+            resolve(data);
+        });
+    });
+};
+
+const showWishInfo = (result) => {
+    console.log(chalk.cyanBright('##################################################################################'));
+    successInfo('ZznodeFE');
+    console.log(chalk.greenBright('You will execute these commands to run the project.'));
+    console.log(chalk.greenBright('    ' + chalk.underline(`1. cd ${result.path}`)));
+    console.log(chalk.greenBright('    ' + chalk.underline('2. cnpm install')));
+    console.log(chalk.greenBright('    ' + chalk.underline('3. npm run start')));
+    console.log(chalk.greenBright('    ' + chalk.underline('Best wish for you!')));
+    console.log();
+    console.log(chalk.cyanBright('##################################################################################'));
+}
+
+module.exports = MakeDev;

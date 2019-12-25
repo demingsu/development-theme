@@ -1,32 +1,40 @@
 {
-    "name": "zznode-cli",
-    "version": "1.1.13",
-    "description": "development theme command line tool",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/demingsu/development-theme"
-    },
-    "keywords": [
-        "development",
-        "cli",
-        "theme"
-    ],
-    "bin": {
-        "zznode": "./bin/dev.js"
-    },
-    "bugs": {
-        "url": "https://github.com/demingsu/development-theme/issues"
-    },
-    "author": "suedeming@163.com",
-    "license": "MIT",
-    "dependencies": {
-        "colors": "^1.1.2",
-        "commander": "^2.12.2",
-        "decompress": "^4.2.0",
-        "download": "^6.2.5"
-    }
+  "author": {
+    "name": "suedeming@163.com"
+  },
+  "bin": {
+    "zznode": "./bin/cli.js"
+  },
+  "bugs": {
+    "url": "https://github.com/demingsu/development-theme/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "chalk": "^3.0.0",
+    "clear": "^0.1.0",
+    "commander": "^2.12.2",
+    "decompress": "^4.2.0",
+    "download": "^6.2.5",
+    "figlet": "^1.2.4",
+    "inquirer": "^7.0.0"
+  },
+  "deprecated": false,
+  "description": "development theme command line tool",
+  "homepage": "https://github.com/demingsu/development-theme#readme",
+  "keywords": [
+    "development",
+    "cli",
+    "theme"
+  ],
+  "license": "MIT",
+  "main": "bin/cli.js",
+  "name": "zznode-cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/demingsu/development-theme.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.2.32"
 }

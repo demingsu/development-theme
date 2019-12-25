@@ -6,12 +6,12 @@
 
 ### View help commands
 
-#### zznode -h
+#### zznode help
 
 ### View System Development Library Installation Commands
 
-#### zznode -f
+#### zznode info/f
 
 ### System Development Library Installation Command
 
-#### zznode -i theme@<themeName> <yourProjectName>
+#### zznode init/i

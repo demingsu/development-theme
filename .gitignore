@@ -1,6 +1,6 @@
 .git
 .git/*
-.cf
-.cf/*
-.ui
-.ui/*
+/cf
+/cf/*
+/ui
+/ui/*

@@ -12,7 +12,7 @@ const MakeDev = async () => {
         {key: 'BE', name: 'BE 后端开发库', value: 'BE'},
         {key: 'M', name: 'M 移动端开发库', value: 'M'},
         {key: 'TS', name: 'TS 后端TS开发库', value: 'TS'},
-        {key: 'CF', name: 'CF 自定义表单库', value: 'CF'}]);
+        {key: 'TL', name: 'TL 后端流程开发库', value: 'TL'}]);
     Object.assign(result, name, title, publish, pkg);
 
     logInfo('  你输入的项目名    ', result.title);
@@ -27,7 +27,7 @@ const MakeDev = async () => {
     if (confirm.conf.trim().toLocaleLowerCase() === "n") {
         log(chalk.yellow('  see you next time'));
     } else {
-        result.package = result.package === 'TS' ? 'TSDEV' : result.package === 'M' ? 'DEVM' : result.package === 'CF' ? 'CUSF' : 'EMPTY';
+        result.package = result.package === 'TS' ? 'TSDEV' : result.package === 'M' ? 'MDEV' : result.package === 'TL' ? 'TLDEV' : 'EMPTY';
 
         let res = await downloadZipFile(result);
         if (res) {

@@ -23,8 +23,8 @@ commander.command('help')
                chalk.redBright(
                    figlet.textSync('zznode-cli', {horizontalLayout: 'full'})
                )));
-            console.log('    cnpm init/i 命令用于初始化项目');
-            console.log('    cnpm info/f 命令用户获取当前版本信息');
+            console.log('    zznode init/i 命令用于初始化项目');
+            console.log('    zznode info/f 命令用户获取当前可用开发库版本信息');
          });
 
 commander.arguments('<dirName>').parse(process.argv);
